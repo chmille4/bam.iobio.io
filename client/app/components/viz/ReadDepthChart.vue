@@ -1,34 +1,32 @@
 <template>
-  <div class='read-depth-chart'>
+  <div class="read-depth-chart">
     <MultiMinibarChart
-      v-if='allPoints.length > 0'
-      :allPoints='allPoints'
-      :xAccessFunc='xAccessFunc'
-      :yAccessFunc='yAccessFunc'
+      v-if="allPoints.length > 0"
+      :allPoints="allPoints"
+      :xAccessFunc="xAccessFunc"
+      :yAccessFunc="yAccessFunc"
       :ids="refIds"
-      :offsets='offsets'
-      :domains='domains'
-      :colorFunc='colorFunc'
-      :totalLength='totalLength'
+      :offsets="offsets"
+      :domains="domains"
+      :colorFunc="colorFunc"
+      :totalLength="totalLength"
       :selectedId="selectedSeqId"
-      :range='range'
-      :average='average'
-      :yAxisRange='yAxisRange'
-      @setSelectedId='setSelectedId'/>
+      :range="range"
+      :average="average"
+      :yAxisRange="yAxisRange"
+      @setSelectedId="setSelectedId"
+    />
   </div>
 </template>
 
 <script>
-
-import MultiMinibarChart from './MultiMinibarChart.vue';
-import d3 from 'd3';
-
+import MultiMinibarChart from "./MultiMinibarChart.vue";
+import d3 from "d3";
 
 export default {
-  name: 'read-depth-chart',
-  props: ['allData', 'selectedSeqId', 'averageCoverage',
-    'yZoom'],
-  data: function() {
+  name: "read-depth-chart",
+  props: ["allData", "selectedSeqId", "averageCoverage", "yZoom"],
+  data: function () {
     return {
       refIds: [],
       offsets: [],
@@ -42,24 +40,24 @@ export default {
     MultiMinibarChart,
   },
   computed: {
-    allPoints: function() {
-      return this.allData.map(d => d.depths);
+    allPoints: function () {
+      return this.allData.map((d) => d.depths);
     },
-    domains: function() {
+    domains: function () {
       return this.allData.map((d) => {
-        return { min: 0, max: d.sqLength }; 
+        return { min: 0, max: d.sqLength };
       });
     },
-    yAxisRange: function() {
-      return { min: 0, max: this.range.max / this.conversionRatio }
+    yAxisRange: function () {
+      return { min: 0, max: this.range.max / this.conversionRatio };
     },
-    yScaleFactor: function() {
+    yScaleFactor: function () {
       return 1 / this.yZoom;
     },
-    range: function() {
+    range: function () {
       return { min: 0, max: this.average * 3 * this.yScaleFactor };
     },
-    conversionRatio: function() {
+    conversionRatio: function () {
       return this.average / this.averageCoverage;
     },
   },
@@ -67,7 +65,7 @@ export default {
     // NOTE: I'm using a watcher for this rather than having multiple
     // computed maps over the same array. Maybe there's a better way to do
     // this in Vue.
-    allData: function() {
+    allData: function () {
       let totalLength = 0;
       const refIds = [];
       const offsets = [];
@@ -83,24 +81,23 @@ export default {
 
       //this.colorFunc.domain(refIds);
     },
-    allPoints: function() {
-
+    allPoints: function () {
       if (!this.haveInitialAverage) {
         this.updateAverage();
       }
     },
   },
   methods: {
-    xAccessFunc: function(elem) {
+    xAccessFunc: function (elem) {
       return elem.pos;
     },
-    yAccessFunc: function(elem) {
+    yAccessFunc: function (elem) {
       return elem.depth;
     },
-    setSelectedId: function(id) {
-      this.$emit('setSelectedSeq', id);
+    setSelectedId: function (id) {
+      this.$emit("setSelectedSeq", id);
     },
-    updateAverage: function() {
+    updateAverage: function () {
       let sum = 0;
       let len = 0;
       // first average
@@ -119,8 +116,7 @@ export default {
       //this.$set(this.range, 'max', this.average * 3);
     },
   },
-}
-
+};
 </script>
 
 <style scoped>

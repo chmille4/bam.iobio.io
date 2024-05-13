@@ -1,18 +1,39 @@
 <template>
-  <div class='pie-chooser-chart'>
-    <svg class='pie-chooser-chart__svg' >
-      <g class='pie-chooser-chart__select-all-button'
-          :transform='translateStr(width / 2, height / 2)'
-          @click='setSelectedId("all")'>
-        <circle cx='0' cy='0' r='25' fill='#f7f3ba' stroke='#ddd' stroke-width='2' />
-        <text :y='fontSize / 2'>All</text>
+  <div class="pie-chooser-chart">
+    <svg class="pie-chooser-chart__svg">
+      <g
+        class="pie-chooser-chart__select-all-button"
+        :transform="translateStr(width / 2, height / 2)"
+        @click="setSelectedId('all')"
+      >
+        <circle
+          cx="0"
+          cy="0"
+          r="25"
+          fill="#f7f3ba"
+          stroke="#ddd"
+          stroke-width="2"
+        />
+        <text :y="fontSize / 2">All</text>
       </g>
-      <g class='pie-chooser-chart__svg__arcs' :transform='translateStr(width / 2, height / 2)' >
-        <g class='pie-chooser-chart__arc' v-for='(d, i) in arcData'
-          :key='data[i].id' :transform='arcTransform(i)'>
-          <path :fill='colors(data[i].id)' :d='pathGen(d)'
-            @click='setSelectedId(data[i].id)' />
-          <text :y='fontSize / 2' :transform='textTransform(i)'>{{ d.data.id }}</text>
+      <g
+        class="pie-chooser-chart__svg__arcs"
+        :transform="translateStr(width / 2, height / 2)"
+      >
+        <g
+          class="pie-chooser-chart__arc"
+          v-for="(d, i) in arcData"
+          :key="data[i].id"
+          :transform="arcTransform(i)"
+        >
+          <path
+            :fill="colors(data[i].id)"
+            :d="pathGen(d)"
+            @click="setSelectedId(data[i].id)"
+          />
+          <text :y="fontSize / 2" :transform="textTransform(i)">
+            {{ d.data.id }}
+          </text>
         </g>
       </g>
     </svg>
@@ -20,66 +41,68 @@
 </template>
 
 <script>
-
-import d3 from 'd3';
-
+import d3 from "d3";
 
 export default {
-  name: 'pie-chooser-chart',
-  props: ['data', 'selectedId'],
-  data: function() {
+  name: "pie-chooser-chart",
+  props: ["data", "selectedId"],
+  data: function () {
     return {
       fontSize: 10,
       width: 0,
       height: 0,
-      pie: d3.layout.pie().sort(null).value((d) => d.length),
+      pie: d3.layout
+        .pie()
+        .sort(null)
+        .value((d) => d.length),
       padding: 15,
       colors: d3.scale.category20b(),
     };
   },
-  components: {
-  },
+  components: {},
   computed: {
-    selecteds: function() {
+    selecteds: function () {
       return this.data.map((d) => {
-        return d.id === this.selectedId || this.selectedId === 'all';
+        return d.id === this.selectedId || this.selectedId === "all";
       });
     },
-    radius: function() {
-      return ((this.width > this.height ? this.height : this.width) / 2) - this.padding;
+    radius: function () {
+      return (
+        (this.width > this.height ? this.height : this.width) / 2 - this.padding
+      );
     },
-    arcGen: function() {
-      return d3.svg.arc()
+    arcGen: function () {
+      return d3.svg
+        .arc()
         .innerRadius(this.radius - 40)
         .outerRadius(this.radius);
     },
-    arcData: function() {
+    arcData: function () {
       return this.pie(this.data);
     },
   },
-  watch: {
-  },
+  watch: {},
   methods: {
-    setSelectedId: function(id) {
-      this.$emit('setSelectedId', id);
+    setSelectedId: function (id) {
+      this.$emit("setSelectedId", id);
     },
-    pathGen: function(arcData) {
+    pathGen: function (arcData) {
       return this.arcGen(arcData);
     },
-    handleResize: function() {
+    handleResize: function () {
       //const dim = this.$refs.container.getBoundingClientRect();
       const dim = this.$el.getBoundingClientRect();
       this.width = dim.width;
       this.height = dim.height;
     },
-    translateStr: function(x, y) {
-      return 'translate(' + x + ', ' + y + ') ';
+    translateStr: function (x, y) {
+      return "translate(" + x + ", " + y + ") ";
     },
-    rotateStr: function(angleRadians) {
+    rotateStr: function (angleRadians) {
       const angleDegrees = angleRadians * (180 / Math.PI);
-      return 'rotate(' + angleDegrees + ') ';
+      return "rotate(" + angleDegrees + ") ";
     },
-    arcTransform: function(i) {
+    arcTransform: function (i) {
       if (this.selecteds[i]) {
         // translate out away from the center
         const arc = this.arcData[i];
@@ -88,29 +111,29 @@ export default {
         const x = Math.sin(middleAngle) * distance;
         const y = -Math.cos(middleAngle) * distance;
         return this.translateStr(x, y);
-      }
-      else {
+      } else {
         return this.translateStr(0, 0);
       }
     },
-    textTransform: function(i) {
+    textTransform: function (i) {
       const arc = this.arcData[i];
       const middleAngle = (arc.startAngle + arc.endAngle) / 2;
       const distance = this.radius - 20;
       const x = Math.sin(middleAngle) * distance;
       const y = -Math.cos(middleAngle) * distance;
-      return this.translateStr(x, y) + this.rotateStr(middleAngle - (Math.PI / 2));
+      return (
+        this.translateStr(x, y) + this.rotateStr(middleAngle - Math.PI / 2)
+      );
     },
   },
-  mounted: function() {
-    window.addEventListener('resize', this.handleResize);
+  mounted: function () {
+    window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
   beforeDestroy: function () {
-    window.removeEventListener('resize', this.handleResize)
-  }
-}
-
+    window.removeEventListener("resize", this.handleResize);
+  },
+};
 </script>
 
 <style scoped>

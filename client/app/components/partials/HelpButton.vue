@@ -1,16 +1,25 @@
 <style type="text/css">
-
-  .glyphicon.glyphicon-info-sign {
-    cursor: pointer;
-    color: #828282;
-  }
-
+.glyphicon.glyphicon-info-sign {
+  cursor: pointer;
+  color: #828282;
+}
 </style>
 
 <template>
-  <span >
-    <title class="glyphicon glyphicon-info-sign" aria-hidden="true" id="help_button" :title="tooltipText" style="vertical-align: text-top" @click="showModal=true;"></title>
-    <help-modal v-if='showModal' @close='showModal = false' :modalTitle="modalTitle">
+  <span>
+    <title
+      class="glyphicon glyphicon-info-sign"
+      aria-hidden="true"
+      id="help_button"
+      :title="tooltipText"
+      style="vertical-align: text-top"
+      @click="showModal = true"
+    ></title>
+    <help-modal
+      v-if="showModal"
+      @close="showModal = false"
+      :modalTitle="modalTitle"
+    >
       <template slot="body">
         <slot name="body"></slot>
       </template>
@@ -23,23 +32,19 @@ import HelpModal from "./HelpModal.vue";
 
 export default {
   components: {
-    HelpModal
+    HelpModal,
   },
-  name: 'help-button',
+  name: "help-button",
   props: {
-    modalTitle: '',
-    body: '',
-    tooltipText: '',
+    modalTitle: "",
+    body: "",
+    tooltipText: "",
   },
   data() {
     return {
-      showModal: false
-    }
+      showModal: false,
+    };
   },
-  methods: {
-
-  }
-}
-
-
+  methods: {},
+};
 </script>

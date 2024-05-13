@@ -1,34 +1,52 @@
 <template>
   <g>
-    <g v-if='points'>
-      <rect v-for='(point, i) in screenPoints' :x='point.x' :y='point.y' width='1'
-        :height='point.height' :key='i' />
+    <g v-if="points">
+      <rect
+        v-for="(point, i) in screenPoints"
+        :x="point.x"
+        :y="point.y"
+        width="1"
+        :height="point.height"
+        :key="i"
+      />
     </g>
-    <rect v-else class='minibar-segment__missing-data' :width='width' :height='height'/>
+    <rect
+      v-else
+      class="minibar-segment__missing-data"
+      :width="width"
+      :height="height"
+    />
   </g>
 </template>
 
 <script>
-
-
 export default {
   props: [
-    'width', 'height',
-    'points', 'color', 'index', 'xAccessFunc', 'yAccessFunc',
-    'selected', 'domain', 'range',
+    "width",
+    "height",
+    "points",
+    "color",
+    "index",
+    "xAccessFunc",
+    "yAccessFunc",
+    "selected",
+    "domain",
+    "range",
   ],
   computed: {
-    smoothed: function() {
+    smoothed: function () {
       const numBins = this.width;
       if (numBins === 0) {
         return [];
       }
 
-      const samplesPerBin = Math.max(1, Math.floor(this.points.length / numBins));
+      const samplesPerBin = Math.max(
+        1,
+        Math.floor(this.points.length / numBins),
+      );
 
       const smoothed = [];
       for (let i = 0; i < this.points.length; i += samplesPerBin) {
-
         // TODO: get actual middle point
         const middlePoint = this.points[i];
 
@@ -42,7 +60,7 @@ export default {
 
       return smoothed;
     },
-    screenPoints: function() {
+    screenPoints: function () {
       const points = this.smoothed;
 
       const screenPoints = [];
@@ -67,7 +85,7 @@ export default {
       return screenPoints;
     },
   },
-}
+};
 </script>
 
 <style scoped>
