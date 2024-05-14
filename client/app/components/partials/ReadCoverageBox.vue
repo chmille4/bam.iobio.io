@@ -1,7 +1,7 @@
 <style type="text/css">
 
   .read-coverage-title {
-    font-size: 30px
+    font-size: 26px
   }
 
   .panel#depth-distribution {
@@ -14,20 +14,13 @@
     width: 65%;
   }
 
-  .hint {
-    height: 14px;
-    margin-top: -7px;
-    margin-bottom: 10px;
-    font-size:13px;
-    color:rgb(170,170,170);
+  .controls-container {
+    display: flex;
+    justify-content: space-between;
   }
 
   .bedfile-button-row {
     display: flex;
-    float: right;
-    position: absolute;
-    right: 15px;
-    top: 20px;
   }
 
   .bedfile-button {
@@ -45,9 +38,6 @@
 
   /* power scale */
   #zoom-buttons {
-    position: absolute;
-    top:28px;
-    left:52px;
     cursor: pointer;
   }
 
@@ -90,32 +80,33 @@
       </help-button>
       Read Coverage
     </div>
-    <div class="hint">
-      <div v-show="selectedSeqId!='all'" >(drag to select region)</div>
-    </div>
 
-    <div class='bedfile-button-row'>
-      <div v-if="bedfileSelected" id="remove-bedfile-button" class="bedfile-button" @click="removeBedFile">
-        Remove Bed
-      </div>
-      <div v-if="!bedfileSelected" id="default-bedfile-button" class="bedfile-button" @click="addH37BedFile" title="1000G human exome targets file ">
-        GRCh37 Exonic Regions
-      </div>
-      <div v-if="!bedfileSelected" id="default-bedfile-button" class="bedfile-button" @click="addH38BedFile" title="1000G human exome targets file ">
-        GRCh38 Exonic Regions
-      </div>
-      <input type="file" name="files[]" id="bedfile"  multiple @change="processBedFile"/>
-      <label v-if="!bedfileSelected" id="add-bedfile-button" class="bedfile-button" for="bedfile" style="font-weight:300" title="Add Bed format capture target definition file">
-        Custom Bed
-      </label>
-    </div>
+    <div class='controls-container'>
 
-    <div id='zoom-buttons' style="display: inline-block;vertical-align: middle">
-      <label style="padding-left: 0">
-        Zoom y axis
-      </label>
-      <button @click='zoomOut'>-</button>
-      <button @click='zoomIn'>+</button>
+      <div id='zoom-buttons'>
+        <label style="padding-left: 0">
+          Zoom y axis
+        </label>
+        <button @click='zoomOut'>-</button>
+        <button @click='zoomIn'>+</button>
+      </div>
+
+      <div class='bedfile-button-row'>
+        <div v-if="bedfileSelected" id="remove-bedfile-button" class="bedfile-button" @click="removeBedFile">
+          Remove Bed
+        </div>
+        <div v-if="!bedfileSelected" id="default-bedfile-button" class="bedfile-button" @click="addH37BedFile" title="1000G human exome targets file ">
+          GRCh37 Exonic Regions
+        </div>
+        <div v-if="!bedfileSelected" id="default-bedfile-button" class="bedfile-button" @click="addH38BedFile" title="1000G human exome targets file ">
+          GRCh38 Exonic Regions
+        </div>
+        <input type="file" name="files[]" id="bedfile"  multiple @change="processBedFile"/>
+        <label v-if="!bedfileSelected" id="add-bedfile-button" class="bedfile-button" for="bedfile" style="font-weight:300" title="Add Bed format capture target definition file">
+          Custom Bed
+        </label>
+      </div>
+
     </div>
 
     <div id="readDepthLoadingMsg" style="font-size:50px;margin-top:30px;color:#2687BE">Initializing data <img style="height:18px" src="../../../images/loading_dots.gif"/></div>

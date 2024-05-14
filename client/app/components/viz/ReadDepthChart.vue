@@ -126,6 +126,6 @@ export default {
 <style scoped>
 .read-depth-chart {
   width: 100%;
-  height: 75%;
+  height: 72%;
 }
 </style>
