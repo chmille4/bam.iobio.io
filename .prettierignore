@@ -9,3 +9,4 @@ LICENSE
 **/*.gif
 **/*.png
 **/*.min.js
+package-lock.json
