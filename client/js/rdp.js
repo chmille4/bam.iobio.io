@@ -32,48 +32,46 @@ http://www.LowVoice.nl
  */
 
 function properRDP(points, epsilon) {
-  var firstPoint = points[0];
-  var lastPoint = points[points.length - 1];
-  if (points.length < 3) {
-    return points;
-  }
-  var index = -1;
-  var dist = 0;
-  for (var i = 1; i < points.length - 1; i++) {
-    var cDist = findPerpendicularDistance(points[i], firstPoint, lastPoint);
-    if (cDist > dist) {
-      dist = cDist;
-      index = i;
-    }
-  }
-  if (dist > epsilon) {
-    // iterate
-    var l1 = points.slice(0, index + 1);
-    var l2 = points.slice(index);
-    var r1 = properRDP(l1, epsilon);
-    var r2 = properRDP(l2, epsilon);
-    // concat r2 to r1 minus the end/startpoint that will be the same
-    var rs = r1.slice(0, r1.length - 1).concat(r2);
-    return rs;
-  } else {
-    return [firstPoint, lastPoint];
-  }
+	var firstPoint = points[0];
+	var lastPoint = points[points.length - 1];
+	if (points.length < 3) {
+		return points;
+	}
+	var index = -1;
+	var dist = 0;
+	for (var i = 1; i < points.length - 1; i++) {
+		var cDist = findPerpendicularDistance(points[i], firstPoint, lastPoint);
+		if (cDist > dist) {
+			dist = cDist;
+			index = i;
+		}
+	}
+	if (dist > epsilon) {
+		// iterate
+		var l1 = points.slice(0, index + 1);
+		var l2 = points.slice(index);
+		var r1 = properRDP(l1, epsilon);
+		var r2 = properRDP(l2, epsilon);
+		// concat r2 to r1 minus the end/startpoint that will be the same
+		var rs = r1.slice(0, r1.length - 1).concat(r2);
+		return rs;
+	} else {
+		return [firstPoint, lastPoint];
+	}
 }
 
 function findPerpendicularDistance(p, p1, p2) {
-  // if start and end point are on the same x the distance is the difference in X.
-  var result;
-  var slope;
-  var intercept;
-  if (p1[0] == p2[0]) {
-    result = Math.abs(p[0] - p1[0]);
-  } else {
-    slope = (p2[1] - p1[1]) / (p2[0] - p1[0]);
-    intercept = p1[1] - slope * p1[0];
-    result =
-      Math.abs(slope * p[0] - p[1] + intercept) /
-      Math.sqrt(Math.pow(slope, 2) + 1);
-  }
+	// if start and end point are on the same x the distance is the difference in X.
+	var result;
+	var slope;
+	var intercept;
+	if (p1[0] == p2[0]) {
+		result = Math.abs(p[0] - p1[0]);
+	} else {
+		slope = (p2[1] - p1[1]) / (p2[0] - p1[0]);
+		intercept = p1[1] - slope * p1[0];
+		result = Math.abs(slope * p[0] - p[1] + intercept) / Math.sqrt(Math.pow(slope, 2) + 1);
+	}
 
-  return result;
+	return result;
 }

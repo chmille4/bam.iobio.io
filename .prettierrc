@@ -18,5 +18,5 @@
 	"useTabs": true,
 	"embeddedLanguageFormatting": "auto",
 	"vueIndentScriptAndStyle": false,
-	"parser": "vue"
+	"parser": "babel"
 }
