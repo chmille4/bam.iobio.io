@@ -18,5 +18,36 @@
 	"useTabs": true,
 	"embeddedLanguageFormatting": "auto",
 	"vueIndentScriptAndStyle": false,
-	"parser": "babel"
+	"overrides": [
+		{
+			"files": "*.js",
+			"options": {
+				"parser": "babel"
+			}
+		},
+		{
+			"files": "*.vue",
+			"options": {
+				"parser": "vue"
+			}
+		},
+		{
+			"files": "*.css",
+			"options": {
+				"parser": "css"
+			}
+		},
+		{
+			"files": "*.json",
+			"options": {
+				"parser": "json"
+			}
+		},
+		{
+			"files": "*.html",
+			"options": {
+				"parser": "html"
+			}
+		}
+	]
 }

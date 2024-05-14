@@ -4,11 +4,8 @@ LICENSE
 **/Dockerfile
 **/node_modules
 **/*.sh
-**/*.json
-**/*.sh
 **/*.md
-**/*.html
 **/*.jpg
 **/*.gif
 **/*.png
-**/*.css
+**/*.min.js
