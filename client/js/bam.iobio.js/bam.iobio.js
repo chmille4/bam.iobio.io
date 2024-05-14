@@ -200,7 +200,7 @@ var Bam = Class.extend({
         if (!this.hadError) {
           alert("Error accessing the BAM index file. Please provide an " +
                 "index file URL or ensure that " +
-                `${this.bamUri + '.bai'} exists`);
+                `${indexUrl} exists`);
           baiErrCb(e);
         }
         console.log(e);
