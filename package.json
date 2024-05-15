@@ -46,6 +46,7 @@
 		"mocha-webpack": "^0.7.0",
 		"node-sass": "^4.11.0",
 		"nodemon": "^1.18.10",
+		"prettier": "^3.2.5",
 		"raw-loader": "^0.5.1",
 		"sass-loader": "^6.0.7",
 		"sinon": "^2.3.5",
