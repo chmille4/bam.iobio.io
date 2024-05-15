@@ -1,13 +1,13 @@
 {
 	"name": "bam.iobio",
 	"version": "1.0.0",
-	"type": "module",
 	"scripts": {
 		"serve": "DEBUG=http nodemon --inspect=127.0.0.1:3001  --ignore client/ www.js",
 		"build": "webpack --mode production",
 		"build-docker": "BUILD_ENV_LOCAL_BACKEND=true webpack --mode production",
 		"watch": "webpack --mode development --watch",
-		"test": "mocha-webpack --webpack-config webpack.test.config.js --require client/spec/spec_helper.js \"client/spec/**/*_spec.js\""
+		"test": "mocha-webpack --webpack-config webpack.test.config.js --require client/spec/spec_helper.js \"client/spec/**/*_spec.js\"",
+		"lint": "prettier --config prettier.config.js --write ./**"
 	},
 	"dependencies": {
 		"bootstrap": "^3.4.1",
@@ -46,7 +46,7 @@
 		"mocha-webpack": "^0.7.0",
 		"node-sass": "^4.11.0",
 		"nodemon": "^1.18.10",
-		"prettier": "^3.2.5",
+		"prettier": "^1.19.1",
 		"raw-loader": "^0.5.1",
 		"sass-loader": "^6.0.7",
 		"sinon": "^2.3.5",
