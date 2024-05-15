@@ -1,6 +1,7 @@
 {
 	"name": "bam.iobio",
 	"version": "1.0.0",
+	"type": "module",
 	"scripts": {
 		"serve": "DEBUG=http nodemon --inspect=127.0.0.1:3001  --ignore client/ www.js",
 		"build": "webpack --mode production",
