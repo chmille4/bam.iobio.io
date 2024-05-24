@@ -1,58 +1,60 @@
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var inProduction = process.env.NODE_ENV === 'production';
-const localBackend = process.env.BUILD_ENV_LOCAL_BACKEND === 'true';
-const { VueLoaderPlugin } = require('vue-loader');
+var path = require("path");
+var webpack = require("webpack");
+var ExtractTextPlugin = require("mini-css-extract-plugin");
+var CleanWebpackPlugin = require("clean-webpack-plugin");
+var inProduction = process.env.NODE_ENV === "production";
+const localBackend = process.env.BUILD_ENV_LOCAL_BACKEND === "true";
+const { VueLoaderPlugin } = require("vue-loader");
 
 module.exports = {
   entry: {
-    app: [
-      './client/app/routes.js',
-    ]
+    app: ["./client/app/routes.js"]
   },
   output: {
-    path: __dirname + '/client/dist/',
-    publicPath: 'dist/',
-    filename: 'build.js'
+    path: __dirname + "/client/dist/",
+    publicPath: "dist/",
+    filename: "build.js"
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: "vue-loader",
         options: {
-          loaders: {
-          }
+          loaders: {}
           // other vue-loader options go here
         }
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /node_modules/
       },
       {
         test: /\.s[ac]ss$/,
-        use: inProduction ? ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        }) : ['style-loader', 'css-loader', 'sass-loader']
+        use: inProduction
+          ? ExtractTextPlugin.extract({
+              fallback: "style-loader",
+              use: ["css-loader", "sass-loader"]
+            })
+          : ["style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.(css|less)$/,
-        use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader" // translates CSS into CommonJS
-        }]
+        use: [
+          {
+            loader: "style-loader" // creates style nodes from JS strings
+          },
+          {
+            loader: "css-loader" // translates CSS into CommonJS
+          }
+        ]
       },
       {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               limit: 100000,
               name: "[name].[hash].[ext]"
@@ -62,16 +64,16 @@ module.exports = {
       },
       {
         test: /\.bed$/,
-        use: 'raw-loader'
+        use: "raw-loader"
       }
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['client/dist'], {}),
+    new CleanWebpackPlugin(["client/dist"], {}),
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
-      BUILD_ENV_LOCAL_BACKEND: localBackend ? 'true' : 'false',
-    }),
+      BUILD_ENV_LOCAL_BACKEND: localBackend ? "true" : "false"
+    })
   ],
   // resolve: {
   //   alias: {
@@ -81,16 +83,16 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: 'cheap-module-inline-source-map'
-}
+  devtool: "inline-cheap-module-source-map"
+};
 
 if (inProduction) {
-  module.exports.devtool = '#source-map'
+  module.exports.devtool = "#source-map";
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new ExtractTextPlugin("main.css"),
     new webpack.DefinePlugin({
-      'process.env': {
+      "process.env": {
         NODE_ENV: '"production"'
       }
     }),
@@ -103,5 +105,5 @@ if (inProduction) {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
-  ])
+  ]);
 }
