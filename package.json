@@ -20,7 +20,7 @@
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "less-loader": "^4.1.0",
-    "qs": "^6.7.0",
+    "qs": "^6.9.7",
     "serve-favicon": "^2.5.0",
     "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.6.10",
