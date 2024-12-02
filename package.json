@@ -43,7 +43,7 @@
     "jsdom-global": "^3.0.2",
     "mocha": "^3.4.2",
     "mocha-webpack": "^0.7.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "nodemon": "^1.18.10",
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.7",
