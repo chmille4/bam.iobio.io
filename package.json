@@ -12,7 +12,7 @@
     "bootstrap": "^3.4.1",
     "connect-history-api-fallback": "^1.6.0",
     "d3": "^3.5.17",
-    "debug": "^2.6.9",
+    "debug": "^3.1.0",
     "express": "^4.16.4",
     "fibridge-host": "^0.16.0",
     "iobio-api-client": "^0.10.0",
